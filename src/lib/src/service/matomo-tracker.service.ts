@@ -21,6 +21,8 @@ export class MatomoTracker {
     constructor() {
         if (typeof window._paq === 'undefined') {
             console.warn('Matomo has not yet been initialized! (Did you forget to inject it?)');
+        } else {
+            window._paq.push(['requireConsent']);
         }
     }
 
@@ -423,6 +425,24 @@ export class MatomoTracker {
         try {
             const args: any[] = [siteId];
             window._paq.push(['setSiteId', ...args]);
+        } catch (e) {
+            if (!(e instanceof ReferenceError)) {
+                throw e;
+            }
+        }
+    }
+
+    /**
+     * Enable or disable tracking.
+     * @param optOut
+     */
+    setOptOut(optOut: boolean): void {
+        try {
+            if (optOut) {
+                window._paq.push(['optUserOut']);
+            } else {
+                window._paq.push(['forgetUserOptOut']);
+            }
         } catch (e) {
             if (!(e instanceof ReferenceError)) {
                 throw e;
