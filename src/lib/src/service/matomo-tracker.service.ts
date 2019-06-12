@@ -439,9 +439,9 @@ export class MatomoTracker {
     setOptOut(optOut: boolean): void {
         try {
             if (optOut) {
-                window._paq.push(['optUserOut']);
-            } else {
                 window._paq.push(['forgetUserOptOut']);
+            } else {
+                window._paq.push(['optUserOut']);
             }
         } catch (e) {
             if (!(e instanceof ReferenceError)) {
